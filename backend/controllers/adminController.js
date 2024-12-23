@@ -1,6 +1,9 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const Tahlil = require('../models/Tahlil');
+
+
+
 exports.registerAdmin = async (req, res) => {
   try {
     const { isim, soyisim, email, sifre } = req.body;
@@ -106,3 +109,86 @@ exports.getUserTestsById = async (req, res) => {
     res.status(500).json({ message: 'Sunucu hatası' });
   }
 };
+
+// Tahlil detaylarını getirme
+exports.getTahlilDetay = async (req, res) => {
+  try {
+    const { tahlilId } = req.params;
+    console.log('İstek yapılan tahlil ID:', tahlilId);
+
+    const tahlil = await Tahlil.findById(tahlilId)
+      .populate('kullanici', 'isim soyisim dogumTarihi');
+
+    if (!tahlil) {
+      console.log('Tahlil bulunamadı');
+      return res.status(404).json({ message: "Tahlil bulunamadı." });
+    }
+
+    // Kullanıcı bilgilerini kontrol et
+    const user = await User.findById(tahlil.kullanici._id);
+    if (!user) {
+      return res.status(404).json({ message: "Kullanıcı bulunamadı" });
+    }
+
+    if (!user.dogumTarihi) {
+      return res.status(400).json({ 
+        message: "Kullanıcı doğum tarihi eksik",
+        userId: user._id 
+      });
+    }
+
+    // Yaş hesapla
+    const yasAy = calculateYasAy(user.dogumTarihi);
+    
+    const response = {
+      _id: tahlil._id,
+      tarih: tahlil.tarih,
+      degerler: tahlil.degerler,
+      kullanici: {
+        _id: user._id,
+        isim: user.isim,
+        soyisim: user.soyisim
+      },
+      yasAy: yasAy
+    };
+
+    console.log('Gönderilen response:', response);
+    res.json(response);
+
+  } catch (err) {
+    console.error("Hata detayı:", err);
+    res.status(500).json({ 
+      message: "Sunucu hatası",
+      error: err.message
+    });
+  }
+};
+
+const calculateYasAy = (dogumTarihi) => {
+  try {
+    const now = new Date();
+    const dogum = new Date(dogumTarihi);
+    
+    if (isNaN(dogum.getTime())) {
+      console.log('Geçersiz tarih formatı:', dogumTarihi); // Debug log
+      return null;
+    }
+
+    let years = now.getFullYear() - dogum.getFullYear();
+    let months = now.getMonth() - dogum.getMonth();
+
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    const totalMonths = years * 12 + months;
+    console.log('Hesaplanan toplam ay:', totalMonths); // Debug log
+    return totalMonths;
+  } catch (error) {
+    console.error('Yaş hesaplama hatası:', error);
+    return null;
+  }
+};
+
+

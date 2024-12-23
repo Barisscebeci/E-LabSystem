@@ -5,7 +5,9 @@ const userSchema = new mongoose.Schema({
   soyisim: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   sifre: { type: String, required: true },
-  yas: { type: Number, required: true }, // Yeni eklenen alan
+  dogumTarihi: { type: Date, required: true }, // Zorunlu alan olarak işaretliyoruz
+  yasAy: { type: Number },
+  //yas: { type: Number, required: true }, // Yeni eklenen alan
   rol: { type: String, enum: ['user', 'admin'], default: 'user' },
 }, { timestamps: true });
 

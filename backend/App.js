@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const cors = require('cors');
+const adminUserRouter = require('./routes/adminUserRouter');
 
 // Ortam değişkenleri için dotenv kullanabilirsiniz
 require('dotenv').config();
@@ -31,9 +32,12 @@ app.get('/api/test', (req, res) => {
 // Rotalar
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/users', require('./routes/users'));
+
+// Remove duplicate admin user routes
 app.use('/api/admin', require('./routes/admin'));
 app.use('/api/tahliller', require('./routes/tahliller'));
 app.use('/api/kilavuzlar', require('./routes/kilavuzlar'));
+app.use('/api/admin/users', adminUserRouter)
 
 // Sunucuyu başlatma
 const PORT = process.env.PORT || 5000;
