@@ -174,41 +174,45 @@ export default function TahlilEkleScreen() {
       Alert.alert("Uyarı", "Lütfen tahlil eklenecek kullanıcıyı seçin.");
       return;
     }
-
-    // Tahlil değerleri doğrulaması
-    const validateValue = (value: string) =>
-      !isNaN(parseFloat(value)) && parseFloat(value) > 0;
-
-    if (
-      !validateValue(IgA) ||
-      !validateValue(IgM) ||
-      !validateValue(IgG) ||
-      !validateValue(IgG1) ||
-      !validateValue(IgG2) ||
-      !validateValue(IgG3) ||
-      !validateValue(IgG4)
-    ) {
-      Alert.alert(
-        "Hata",
-        "Lütfen tüm tahlil değerlerini doğru şekilde giriniz."
-      );
-      return;
-    }
-
+  
+    // Boşluk kontrolü yapıp sadece dolu değerleri ekleyen yardımcı fonksiyon
+    const parseValueOrNull = (value: string) => {
+      const trimmed = value.trim();
+      if (trimmed === "") return null; // İsterseniz direk return null diyebilirsiniz
+      const parsed = parseFloat(trimmed);
+      return isNaN(parsed) ? null : parsed;
+    };
+  
+    // "degerler" nesnesini dinamik olarak sadece doldurulmuş alanlarla oluşturmak
+    const degerlerPayload: Record<string, number | null> = {};
+  
+    const IgAValue = parseValueOrNull(IgA);
+    if (IgAValue !== null) degerlerPayload.IgA = IgAValue;
+  
+    const IgMValue = parseValueOrNull(IgM);
+    if (IgMValue !== null) degerlerPayload.IgM = IgMValue;
+  
+    const IgGValue = parseValueOrNull(IgG);
+    if (IgGValue !== null) degerlerPayload.IgG = IgGValue;
+  
+    const IgG1Value = parseValueOrNull(IgG1);
+    if (IgG1Value !== null) degerlerPayload.IgG1 = IgG1Value;
+  
+    const IgG2Value = parseValueOrNull(IgG2);
+    if (IgG2Value !== null) degerlerPayload.IgG2 = IgG2Value;
+  
+    const IgG3Value = parseValueOrNull(IgG3);
+    if (IgG3Value !== null) degerlerPayload.IgG3 = IgG3Value;
+  
+    const IgG4Value = parseValueOrNull(IgG4);
+    if (IgG4Value !== null) degerlerPayload.IgG4 = IgG4Value;
+  
     const payload = {
       kullaniciId: selectedUser._id,
       tarih: new Date().toISOString(),
-      degerler: {
-        IgA: parseFloat(IgA),
-        IgM: parseFloat(IgM),
-        IgG: parseFloat(IgG),
-        IgG1: parseFloat(IgG1),
-        IgG2: parseFloat(IgG2),
-        IgG3: parseFloat(IgG3),
-        IgG4: parseFloat(IgG4),
-      },
+      degerler: degerlerPayload,
     };
-
+  
     try {
       setLoadingAdd(true);
       // API isteği

@@ -7,7 +7,7 @@ import { Ionicons } from "@expo/vector-icons"; // Ionicons'u içe aktarın
 
 const Tab = createBottomTabNavigator();
 
-export default function AdminNavigator() {
+export default function AdminTabNavigator() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -37,6 +37,7 @@ export default function AdminNavigator() {
           borderTopWidth: 0,
           elevation: 5,
           height: 60, // Tab bar yüksekliğini artırmak isterseniz
+          display: 'none', // Hide default tab bar if using custom BottomBar
         },
         tabBarLabelStyle: {
           fontSize: 12,
