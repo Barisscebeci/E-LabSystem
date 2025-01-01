@@ -1,5 +1,3 @@
-Aşağıda, **E-LabSystem** için hazırlanmış, göze hoş görünen ve kritik bölümleri öne çıkaran bir **README** taslağı görebilirsiniz. İhtiyaçlarınıza göre düzenleyebilir ve GitHub deponuza ekleyebilirsiniz.
-
 ---
 
 # **E-LabSystem**
