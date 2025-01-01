@@ -126,7 +126,6 @@ export default function KilavuzDetayScreen() {
           </Text>
         </View>
         <View style={styles.referenceInfo}>
-          {/* Ek bilgi alanları buraya eklenebilir */}
         </View>
         <View style={styles.referenceActions}>
           <TouchableOpacity onPress={() => handleUpdateReference(item)}>

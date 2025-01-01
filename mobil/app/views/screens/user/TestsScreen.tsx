@@ -341,22 +341,22 @@ export default function TestsScreen({ navigation }: Props) {
   // Trend hesaplaması yapan fonksiyon
   const getTrendIcon = (currentValue: number, previousValue: number | null) => {
     if (previousValue === null) {
-      // Önceki test yoksa sabit (↔)
       return (
         <Ionicons
           name="swap-horizontal-outline"
           size={20}
-          color="#555"
+          color="#1E88E5"
           style={{ marginLeft: 4 }}
         />
       );
     }
+
     if (currentValue > previousValue) {
       return (
         <Ionicons
           name="arrow-up-circle-outline"
           size={20}
-          color="#3F51B5" // Renk değiştirildi
+          color="#F44336" 
           style={{ marginLeft: 4 }}
         />
       );
@@ -365,16 +365,16 @@ export default function TestsScreen({ navigation }: Props) {
         <Ionicons
           name="arrow-down-circle-outline"
           size={20}
-          color="#3F51B5" // Renk değiştirildi
+          color="#4CAF50" 
           style={{ marginLeft: 4 }}
         />
       );
     } else {
       return (
         <Ionicons
-          name="remove-circle-outline"
+          name="swap-horizontal-outline"
           size={20}
-          color="#555"
+          color="#1E88E5"
           style={{ marginLeft: 4 }}
         />
       );
