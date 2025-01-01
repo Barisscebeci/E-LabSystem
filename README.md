@@ -1,16 +1,3 @@
----
-
-# **E-LabSystem**
-
-Bu proje, **sağlık tahlil sonuçlarının yönetimi ve takibi** için geliştirilmiş bir **mobil uygulama**dır. İki ana kullanıcı rolüyle çalışır:
-
-1. **Hasta (Kullanıcı)**: Tahlil sonuçlarını ekleyip günceller, geçmiş sonuçları görüntüler.  
-2. **Doktor (Admin)**: Hastalara ait tahlil sonuçlarını yönetir, referans kılavuzları oluşturup düzenler.
-
-**GitHub Deposu**: [E-LabSystem](https://github.com/Barisscebeci/E-LabSystem.git)
-
----
-
 ## **İçindekiler**
 
 1. [Proje Genel Bakış](#proje-genel-bakış)  
